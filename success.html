@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>💕 She Said Yes! 💕</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Great+Vibes&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+</head>
+
+<body class="success-body">
+    <!-- Sparkle Effects -->
+    <div class="sparkles" id="sparkles"></div>
+    
+    <!-- Floating Hearts Background -->
+    <div class="background-hearts" id="background-hearts"></div>
+    
+    <!-- Glowing Orbs -->
+    <div class="glow-orb orb-1"></div>
+    <div class="glow-orb orb-2"></div>
+    <div class="glow-orb orb-3"></div>
+
+    <div class="container">
+        <div class="glass-card success-card">
+            <!-- Ring Animation -->
+            <div class="ring-container">💍</div>
+            
+            <!-- Main Title -->
+            <h1 class="title success-title">She Said YES!</h1>
+            
+            <!-- Subtitle -->
+            <p class="success-message">You just made me the happiest person alive! 💖</p>
+            
+            <!-- Emoji Rain -->
+            <div class="emoji-rain">
+                <span>🥰</span>
+                <span>💖</span>
+                <span>💍</span>
+                <span>🎊</span>
+                <span>💕</span>
+            </div>
+            
+            <!-- Love Letter -->
+            <div class="love-letter">
+                <p>
+                    "From the moment I met you, I knew you were special.<br>
+                    Now I can't wait to spend every Valentine's with you!<br>
+                    I love you more than words can say! 💝"
+                </p>
+            </div>
+            
+            <!-- Floating Hearts Row -->
+            <div class="floating-couples" style="position: relative; margin-top: 2rem; bottom: auto; left: auto; transform: none; justify-content: center;">
+                <span>👫</span>
+                <span>💑</span>
+                <span>👩‍❤️‍👨</span>
+                <span>💏</span>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ========== CONFETTI CELEBRATION ==========
+        window.addEventListener('load', () => {
+            // Initial burst
+            const duration = 8 * 1000;
+            const animationEnd = Date.now() + duration;
+            const defaults = { 
+                startVelocity: 30, 
+                spread: 360, 
+                ticks: 60, 
+                zIndex: 1000,
+                colors: ['#ff4d6d', '#ff758f', '#ffb3c1', '#ffd700', '#ff69b4', '#ff1493']
+            };
+
+            function random(min, max) {
+                return Math.random() * (max - min) + min;
+            }
+
+            const interval = setInterval(function () {
+                const timeLeft = animationEnd - Date.now();
+
+                if (timeLeft <= 0) {
+                    return clearInterval(interval);
+                }
+
+                const particleCount = 50 * (timeLeft / duration);
+                
+                // Left side confetti
+                confetti(Object.assign({}, defaults, { 
+                    particleCount, 
+                    origin: { x: random(0.1, 0.3), y: Math.random() - 0.2 } 
+                }));
+                
+                // Right side confetti
+                confetti(Object.assign({}, defaults, { 
+                    particleCount, 
+                    origin: { x: random(0.7, 0.9), y: Math.random() - 0.2 } 
+                }));
+                
+                // Center confetti
+                confetti(Object.assign({}, defaults, { 
+                    particleCount: particleCount / 2, 
+                    origin: { x: 0.5, y: random(0.3, 0.5) } 
+                }));
+            }, 250);
+
+            // Heart-shaped confetti burst
+            setTimeout(() => {
+                confetti({
+                    particleCount: 100,
+                    spread: 70,
+                    origin: { y: 0.6 },
+                    shapes: ['circle'],
+                    colors: ['#ff4d6d', '#ff758f', '#ffb3c1']
+                });
+            }, 500);
+        });
+
+        // ========== SPARKLE EFFECTS ==========
+        const sparklesContainer = document.getElementById('sparkles');
+        
+        function createSparkle() {
+            const sparkle = document.createElement('div');
+            sparkle.classList.add('sparkle');
+            sparkle.style.left = Math.random() * 100 + "vw";
+            sparkle.style.top = Math.random() * 100 + "vh";
+            sparkle.style.animationDelay = Math.random() * 2 + "s";
+            sparklesContainer.appendChild(sparkle);
+
+            setTimeout(() => {
+                sparkle.remove();
+            }, 2000);
+        }
+
+        setInterval(createSparkle, 150);
+
+        // ========== HEART ANIMATION ==========
+        const container = document.getElementById('background-hearts');
+        
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.classList.add('heart');
+            
+            const heartTypes = ['❤️', '💕', '💖', '💗', '💝', '💘', '🩷', '🤍', '💜', '🧡'];
+            heart.innerHTML = heartTypes[Math.floor(Math.random() * heartTypes.length)];
+            
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.animationDuration = Math.random() * 3 + 3 + 's';
+            heart.style.fontSize = Math.random() * 20 + 15 + 'px';
+
+            container.appendChild(heart);
+
+            setTimeout(() => {
+                heart.remove();
+            }, 6000);
+        }
+        
+        setInterval(createHeart, 200);
+
+        // ========== ENTRANCE ANIMATION ==========
+        document.addEventListener('DOMContentLoaded', () => {
+            const card = document.querySelector('.glass-card');
+            card.style.opacity = '0';
+            card.style.transform = 'scale(0.5) rotate(-5deg)';
+            
+            setTimeout(() => {
+                card.style.transition = 'all 1s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
+                card.style.opacity = '1';
+                card.style.transform = 'scale(1) rotate(0deg)';
+            }, 200);
+        });
+    </script>
+</body>
+
+</html>
